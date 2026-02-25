@@ -14,7 +14,7 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
-    steps: # <--- ESTA LÍNEA ES LA QUE TE FALTA
+    steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
@@ -27,9 +27,11 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_SEA_0D1D4231E }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
+          ###### Configuración de Construcción ######
           app_location: "/" 
           api_location: "" 
           output_location: "out" 
+          ############################################
         env:
           NPM_CONFIG_LEGACY_PEER_DEPS: true
 
@@ -44,4 +46,5 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_SEA_0D1D4231E }}
           action: "close"
+
 
