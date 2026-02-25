@@ -30,8 +30,9 @@ jobs:
           app_location: "/" 
           api_location: "" 
           output_location: "out" 
-        env:
-          NPM_CONFIG_LEGACY_PEER_DEPS: true
+          # AGREGA ESTO AQUÍ ADENTRO DE 'with':
+          build_environment_variables: |
+            NPM_CONFIG_LEGACY_PEER_DEPS=true
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -44,6 +45,7 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_SEA_0D1D4231E }}
           action: "close"
+
 
 
 
