@@ -20,21 +20,25 @@ jobs:
           submodules: true
           lfs: false
 
-      # 1. Configuramos Node.js manualmente
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 2. Instalamos dependencias forzando la compatibilidad
+      # Instalamos pnpm porque tu proyecto está diseñado para él
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      # Instalamos ignorando los problemas de versiones de React 19
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: pnpm install --no-frozen-lockfile
 
-      # 3. Compilamos el proyecto de Next.js
+      # Construimos el sitio estático
       - name: Build Project
-        run: npm run build
+        run: pnpm run build
 
-      # 4. Subimos el resultado a Azure (sin que Azure intente compilar de nuevo)
       - name: Upload to Azure
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -45,6 +49,7 @@ jobs:
           app_location: "/" 
           api_location: "" 
           output_location: "out" 
-          skip_app_build: true # <--- ESTO ES LA CLAVE: Evita que Azure falle al intentar compilar
+          skip_app_build: true # Le decimos a Azure que no intente compilar nada, que ya lo hicimos nosotros
+
 
 
