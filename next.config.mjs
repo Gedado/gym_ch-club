@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export', // <--- ESTO ES LO MÁS IMPORTANTE PARA EL DESPLIEGUE ESTÁTICO
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: true, // Lo mantenemos para que el build no se detenga por errores de tipos
   },
   images: {
-    unoptimized: true,
+    unoptimized: true, // Obligatorio para 'export'
     remotePatterns: [
       {
         protocol: 'https',
@@ -14,4 +15,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default nextConfig;
